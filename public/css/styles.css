@@ -1,0 +1,44 @@
+nav{
+    background-color: #673d1a;
+}
+
+.navbar-size {
+    width: 95%;
+    margin: 0 auto;   
+}
+
+.user-image-size {
+    margin-left: -20px;
+    height: 56px;
+    margin: 4px 0;
+}
+
+.loginNavbar{
+    margin-left: 40px;
+}
+
+.registerNavbar{
+    margin-left: 40px;
+}
+    
+.homeNavbar{
+    margin-left: 40px;
+}
+       
+.main-body {
+    background-color: #9a602d;
+    color: white;
+    height: calc(100vh - 64px);
+}
+
+.materialboxed-image {
+    margin: 0 auto;
+    height: 520px;
+    width: 450px;
+}
+
+.click-me-button {
+    background-color: #9a602d;
+    margin-top: 50px;
+}
+    
