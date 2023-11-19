@@ -24,6 +24,20 @@ const submitForm = () => {
     formData.password = $('#password').val();
     formData.email = $('#email').val();
     console.log("Form Data Submitted: ", formData);
+
+      // Send the form data to the server
+      $.ajax({
+        type: "POST",
+        url: "/submit-form", 
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
 };
 
 const addCards = (items) => {
@@ -40,6 +54,14 @@ const addCards = (items) => {
     });
 };
 
+const getProjects = () => {
+    $.get('/api/projects',(response) => {
+        if(response.statusCode==200){
+          addCards(response.data);
+        }
+    })
+}
+
 $(document).ready(function () {
     // Function to show the modal
     const showMyModal = () => {
@@ -48,16 +70,18 @@ $(document).ready(function () {
 
     // Click event for the "Click Me" button to show the modal
     $('#clickMeButton').click(() => {
-        clickMe();
+        showMyModal();
     });
 
     $('.materialboxed').materialbox();
     $('#formSubmit').click(() => {
         submitForm();
     });
-    addCards(cardList);
+
+        getProjects();
+    $('.modal').modal();
+        addCards(cardList);
     $('.modal').modal();
 });
-
 
 
