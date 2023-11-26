@@ -13,34 +13,11 @@ const cardList = [
     }
 ];
 
-const clickMe = () => {
-    alert("Explore the marvelous rock formations around the world!");
-};
-
-const submitForm = () => {
-    let formData = {};
-    formData.first_name = $('#first_name').val();
-    formData.last_name = $('#last_name').val();
-    formData.password = $('#password').val();
-    formData.email = $('#email').val();
-    console.log("Form Data Submitted: ", formData);
-
-      // Send the form data to the server
-      $.ajax({
-        type: "POST",
-        url: "/submit-form", 
-        contentType: "application/json",
-        data: JSON.stringify(formData),
-        success: function(response) {
-            console.log(response);
-        },
-        error: function(error) {
-            console.error(error);
-        }
-    });
-};
-
 const addCards = (items) => {
+    if (!Array.isArray(items)) {
+        console.error('Invalid input. Expected an array.');
+        return;
+    }
     items.forEach(item => {
         let itemToAppend = '<div class="col s4 center-align">' +
             '<div class="card medium"><div class="card-image waves-effect waves-block waves-light"><img class="activator" src="' + item.image + '">' +
@@ -48,27 +25,53 @@ const addCards = (items) => {
             '<span class="card-title activator grey-text text-darken-4">' + item.title + '<i class="material-icons right">more_vert</i></span><p><a href="#">' + item.link + '</a></p></div>' +
             '<div class="card-reveal">' +
             '<span class="card-title grey-text text-darken-4">' + item.title + '<i class="material-icons right">close</i></span>' +
-            '<p class="card-text">' + item.desciption + '</p>' +
+            '<p class="card-text">' + item.description + '</p>' +
             '</div></div></div>';
         $("#card-section").append(itemToAppend);
     });
 };
 
-const getProjects = () => {
-    $.get('/api/projects',(response) => {
-        if(response.statusCode==200){
-          addCards(response.data);
+const submitForm = () => {
+    let formData = {
+        // Extract form data as needed
+        first_name: $('#first_name').val(),
+        last_name: $('#last_name').val(),
+        password: $('#password').val(),
+        email: $('#email').val(),
+    };
+
+    // Send the form data to the server
+    $.ajax({
+        type: "POST",
+        url: "/api/projects/submit-form",
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+        dataType: "json", 
+        success: function (response) {
+            console.log(response);
+            // Handle success, if needed
+        },
+        error: function (error) {
+            console.error(error);
+            // Handle error, if needed
         }
-    })
-}
+    });
+};
+
+
+const getProjects = () => {
+    $.get('/api/projects', (response) => {
+        if (response.statusCode == 200) {
+            addCards(response.data);
+        }
+    });
+};
 
 $(document).ready(function () {
-    // Function to show the modal
     const showMyModal = () => {
         $('#modal1').modal('open');
     };
 
-    // Click event for the "Click Me" button to show the modal
     $('#clickMeButton').click(() => {
         showMyModal();
     });
@@ -78,10 +81,7 @@ $(document).ready(function () {
         submitForm();
     });
 
-        getProjects();
+    getProjects();
     $('.modal').modal();
-        addCards(cardList);
-    $('.modal').modal();
+    addCards(cardList);
 });
-
-
