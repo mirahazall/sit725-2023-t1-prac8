@@ -1,6 +1,14 @@
 let express = require("express");
 let app = express();
 
+// Set Content-Type header for JavaScript files
+app.use('/node_modules/socket.io/dist', express.static(__dirname + '/node_modules/socket.io/dist', { 
+  setHeaders: (res, path) => {
+    if (path.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    }
+  }
+}));
 
 //dbConnect.dbConnect()
 //var app = require('express')();
@@ -9,13 +17,8 @@ let io = require('socket.io')(http);
 //const MongoClient = require('mongodb').MongoClient;
 
 
-
-
-
 // routes
 let projectsRoute = require('./routes/projects')
-
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
