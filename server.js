@@ -14,7 +14,6 @@ app.use('/node_modules/socket.io/dist', express.static(__dirname + '/node_module
 //var app = require('express')();
 let http = require('http').createServer(app);
 let io = require('socket.io')(http);
-//const MongoClient = require('mongodb').MongoClient;
 
 
 // routes
@@ -52,13 +51,11 @@ io.on('connection', (socket) => {
   }, 1000);
 
 });
-
-
-
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log('App listening to port: ' + port);
+http.listen(port, () => {
+  console.log('Socket.IO listening to port: ' + port);
 });
+
 
 
 

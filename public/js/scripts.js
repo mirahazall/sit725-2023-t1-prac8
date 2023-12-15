@@ -85,3 +85,8 @@ $(document).ready(function () {
     $('.modal').modal();
     addCards(cardList);
 });
+
+let socket = io();
+        socket.on('number',(msg)=>{
+            console.log('Random Number: ' + msg);
+        });
