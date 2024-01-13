@@ -1,0 +1,5 @@
+docker build -t mirahazall/sit725-2023-t1-prac6:1.1.1 .
+docker run -p 1010:3000 mirahazall/sit725-2023-t1-prac6:1.1.1
+docker ps
+docker exec -it <ImageId> /bin/bash
+docker push mirahazall/sit725-2023-t1-prac6:1.1.1
